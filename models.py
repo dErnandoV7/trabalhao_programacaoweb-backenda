@@ -32,11 +32,13 @@ class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(100), nullable=False)
     produtos = db.relationship('Produto', backref='categoria', lazy=True)
-
+    imagem_url = db.Column(db.String(200))
+    
     def to_dict(self):
         return {
             "id": self.id,
-            "nome": self.nome
+            "nome": self.nome,
+            "imagem_url": self.imagem_url
         }
 
 class Produto(db.Model):
@@ -44,6 +46,9 @@ class Produto(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     preco = db.Column(db.Float, nullable=False) 
     imagem_url = db.Column(db.String(200))
+    images_url = db.Column(db.String(200))
+    descricao = db.Column(db.String(1000))
+    caracteristicas = db.Column(db.String(500))
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
 
     def to_dict(self):
@@ -52,6 +57,9 @@ class Produto(db.Model):
             "nome": self.nome,
             "preco": self.preco,
             "imagem_url": self.imagem_url,
+            "images_url": self.images_url,
             "categoria_id": self.categoria_id,
-            "categoria": self.categoria.nome
+            "categoria": self.categoria.nome,
+            "descricao": self.descricao,
+            "caracteristicas": self.caracteristicas
         }
